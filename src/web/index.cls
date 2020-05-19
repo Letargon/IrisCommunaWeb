@@ -66,9 +66,10 @@ var user_form_template = {
     {view: "text", name: "fname", label: "Name"},
     {view: "text", name: "fage", label: "Age"},
     { view:"button",  value:"Submit", id:"btn", click:function(){
-      var values = this.getFormView().getValues();
-      webix.ajax().post("/api/users/save", values, submitUser);
-    }}
+        var values = this.getFormView().getValues();
+        webix.ajax().post("/api/users/save", values, submitUser);
+      }
+    }
   ]};
 
 var ui_template = {
