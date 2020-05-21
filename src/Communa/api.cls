@@ -66,10 +66,24 @@ ClassMethod truncateOwners() As %Status
 ClassMethod saveDebt() As %Status
 {
     set obj = {}
-    set obj.owner = %request.Get("owner")
+
+    set obj.owner =  %request.Get("owner")
     set obj.date = $ZDATEH(%request.Get("date"), 3)
     set obj.service = %request.Get("service")
     set obj.sum = %request.Get("sum")
+    set result = ##class(Communa.Debt).saveDebt(obj)
+    write result.%ToJSON()
+    Return result
+}
+
+ClassMethod saveDebtTest() As %Status
+{
+    set obj = {}
+    set obj.owner =  $PIECE("name/1", "/", 2)
+    set obj.date = $ZDATEH("2020-09-22", 3)
+    set obj.service = $PIECE("service/1","/",2)
+    write obj.owner," ", obj.service
+    set obj.sum = 100
     set result = ##class(Communa.Debt).saveDebt(obj)
     write result.%ToJSON()
     Return result

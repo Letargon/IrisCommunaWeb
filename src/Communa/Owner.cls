@@ -64,7 +64,7 @@ ClassMethod getAllOwners() As %Library.DynamicArray
     &sql(FETCH MyCursor)
     if (SQLCODE) quit
 
-    set obj = {"ownerID": (id), "name": (name), "sector": (sector), "room": (room), "address": (address)}
+    set obj = {"ownerID": (id), "name": (name), "sector": (sector), "room": (room), "address": (address), "id":(id), "value":(name_"/"_id)}
     do data.%Push(obj)
  	}
  	&sql(CLOSE MyCursor)

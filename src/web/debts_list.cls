@@ -28,7 +28,7 @@ ClassMethod body() As %Status
     &JS<
         <script type="text/javascript">
 
-        var submitOwner = (rawData) => {
+        var submitDebt = (rawData) => {
             let data = JSON.parse(rawData);
             let message;
             if (data.result) {
@@ -40,7 +40,7 @@ ClassMethod body() As %Status
             webix.message(message);
         }
 
-        var owner_list_template = {
+        var debt_list_template = {
             id:"tab1_content",
             view:"datatable",
             columns:[
@@ -67,12 +67,19 @@ ClassMethod body() As %Status
         };
 
 
-        var owner_form_template = {
+        var debt_form_template = {
             id:"tab2_content",
             view:"form",
             width: "400",
             elements:[
-                {view: "text", name: "owner", label: "OwnerID"},
+                {
+                    view: "richselect",
+                    name: "owner",
+                    width: 200,
+                    value: 1, 
+                    options: "/communa/listOwners",
+                    label: "Owner"
+                },
                 {
                     view:"datepicker",
                     name: "date", 
@@ -81,13 +88,20 @@ ClassMethod body() As %Status
                     timepicker: false,
                     width: 300  
                 },
-                {view: "text", name: "service", label: "ServiceID"},
+                {
+                    view: "richselect",
+                    name: "service",
+                    width: 200,
+                    value: 1, 
+                    options: "/communa/listServices",
+                    label: "Service"
+                },
                 {view: "text", name: "sum", label: "Sum"},
                 { view:"button",  value:"Save", id:"btn", 
                     click:function(){
                             var values = this.getFormView().getValues();
-                            
-                            webix.ajax().post("/communa/saveDebt", values, submitOwner);
+                            console.log(values)
+                            webix.ajax().post("/communa/saveDebt", values, submitDebt);
                             var url = $$(`tab1_content`).data.url
                             $$(`tab1_content`).clearAll();
                             $$(`tab1_content`).load(url);
@@ -134,8 +148,8 @@ ClassMethod body() As %Status
                                 { 
                                     id:"t1_content",
                                     cells:[
-                                            owner_form_template,
-                                            owner_list_template
+                                            debt_form_template,
+                                            debt_list_template
                                     ]   
                                 }
                         ]

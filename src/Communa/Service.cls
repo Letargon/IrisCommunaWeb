@@ -52,7 +52,7 @@ ClassMethod getAllServices() As %Library.DynamicArray
     &sql(FETCH MyCursor)
     if (SQLCODE) quit
 
-    set obj = {"serviceID": (id), "name": (name),  "cost": (cost)}
+    set obj = {"serviceID": (id), "name": (name),  "cost": (cost), "id":(id), "value": (name_"/"_id)}
     do data.%Push(obj)
  	}
  	&sql(CLOSE MyCursor)
